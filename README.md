@@ -85,3 +85,14 @@ These files should be included in the `topol.top` file to build the full system 
    ```bash
    gmx grompp -f 1_minimization.mdp -c system.gro -p topol.top -o em.tpr
    gmx mdrun -deffnm em
+
+2. **Equilibration**
+   ```bash
+   gmx grompp -f 2_equilibration.mdp -c em.gro -p topol.top -o eq.tpr
+   gmx mdrun -deffnm eq
+3. **Production Run**
+      ```bash
+   gmx grompp -f 3_production.mdp -c eq.gro -p topol.top -o md.tpr
+   gmx mdrun -deffnm md
+
+
