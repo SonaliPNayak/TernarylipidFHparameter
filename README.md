@@ -46,3 +46,42 @@ These `.itp` files define the bonded and non-bonded parameters for each molecule
    ```bash
    gmx grompp -f step6.0_minimization.mdp -c initial.gro -p topol.top -o em.tpr
    gmx mdrun -deffnm em
+
+   
+# Martini 3.0 MD Simulation Setup -- CG-MD
+
+This directory contains the input files required to run **coarse-grained molecular dynamics (CG-MD)** simulations with the **Martini 3.0 force field** in **GROMACS**.  
+The workflow consists of energy minimization, equilibration, and production runs.
+
+---
+
+## File Organization
+
+### Force Field and Topology Files
+- **martini_v3.0.0.itp** – Core Martini 3.0 parameters.
+- **martini_v3.0.0_ffbonded_v2_openbeta.itp** – Bonded interaction definitions (open beta).
+- **martini_v3.0.0_ions_v1.itp** – Ion parameters.
+- **martini_v3.0.0_phospholipids_PC_v2_openbeta.itp** – Phosphatidylcholine (PC) lipid parameters (open beta version).
+- **martini_v3.0.0_solvents_v1.itp** – Solvent parameters (e.g., water, alcohols).
+- **martini_v3.0.0_sterols_v1.itp** – Sterol parameters (e.g., cholesterol).
+
+These files should be included in the `topol.top` file to build the full system topology.
+
+---
+
+### MD Parameter Files (`.mdp`)
+- **1_minimization.mdp** – Energy minimization to remove steric clashes and relax the system.
+- **2_equilibration.mdp** – Equilibration phase under controlled temperature and pressure with possible restraints.
+- **3_production.mdp** – Main production run (default simulation temperature).
+- **3_production_300.mdp** – Production run specifically at 300 K.
+
+- **mdout.mdp** – Generic MD parameter output file.
+
+---
+
+## Workflow
+
+1. **Energy Minimization**
+   ```bash
+   gmx grompp -f 1_minimization.mdp -c system.gro -p topol.top -o em.tpr
+   gmx mdrun -deffnm em
