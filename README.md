@@ -126,7 +126,7 @@ This folder documents the **concept and steps** for extracting Flory–Huggins i
 
 ## Provided RDF data (to enhance reproducibility)
 
-- **Location:** `data/rdf_pmf/`
+- **Location:** `CG_MD/all_beadpairs/`
 - **Format:** ASCII `.dat` files, one per pair/state point. Default columns:
 
 
