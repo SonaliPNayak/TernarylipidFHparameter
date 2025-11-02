@@ -95,11 +95,13 @@ These files should be included in the `topol.top` file to build the full system 
    gmx grompp -f 3_production.mdp -c eq.gro -p topol.top -o md.tpr
    gmx mdrun -deffnm md
 
+
 # χ–Parameter Extraction (RDF → PMF → ω → χ)
 
 This folder documents the **concept and steps** for extracting Flory–Huggins interaction parameters \(\chi_{ij}\) from molecular dynamics data.
 
-**Note:** **Home-made Python scripts** (based on the **MDAnalysis** and **mdtraj** libraries) were used a posteriori to analyze trajectories and generate plots.
+**Note:** **Home-made Python scripts** (based on **MDAnalysis** and **mdtraj**) were used a posteriori to analyze trajectories and generate plots.  
+**Data availability:** To maximize transparency and reproducibility (and to support the manuscript), we **share the precomputed RDF files** (`.dat`) for all lipid–lipid pairs analyzed (see **Provided RDF data** below).
 
 ---
 
@@ -108,7 +110,7 @@ This folder documents the **concept and steps** for extracting Flory–Huggins i
 - Preprocessed, imaged, and centered MD trajectories (AA or CG)
 - Topology files compatible with MDAnalysis/mdtraj
 - Temperature \(T\) (or \(k_BT\)) used for each dataset
-- Pair distribution functions \(g_{ij}(r)\) **if already computed** (optional; otherwise they are computed by our in-house scripts)
+- **Pair distribution functions \(g_{ij}(r)\) (shared as `.dat`)** — you can use these directly, or regenerate RDFs with your own tools following the steps here
 
 ---
 
@@ -122,61 +124,11 @@ This folder documents the **concept and steps** for extracting Flory–Huggins i
 
 ---
 
-## Theory (minimal)
+## Provided RDF data (to enhance reproducibility)
 
-1) **PMF from RDF**  
-\[
-W_{ij}(r) = -\,k_BT \ln g_{ij}(r) + C,\qquad W_{ij}(r\!\to\!r_{\max}) \to 0
-\]
+- **Location:** `data/rdf_pmf/`
+- **Format:** ASCII `.dat` files, one per pair/state point. Default columns:
 
-2) **Effective contact energy**  
-\[
-\omega_{ij} = \min_{r \in [r_\text{contact}^{\min},\, r_\text{contact}^{\max}]}\; W_{ij}(r),\quad \omega_{ii}=0
-\]
-
-3) **Map to FH parameters**  
-\[
-\chi'_{ij} = \frac{1}{k_BT}\left(\omega_{ij}-\tfrac12(\omega_{ii}+\omega_{jj})\right)
-\quad\Rightarrow\quad
-\chi'_{ij} = \frac{\omega_{ij}}{k_BT}\;(\text{if }\omega_{ii}=\omega_{jj}=0)
-\]
-Optional lattice scaling (for MC on a triangular lattice, e.g. \(z=6\)):
-\[
-\chi_{ij}=z_{ij}\,\chi'_{ij}
-\]
-
----
-
-## Step-by-step (no code)
-
-1. **Prepare trajectories**  
-   - Recenter/image systems; ensure consistent selections across AA/CG.  
-   - Decide contact window (e.g., \(0.4\)–\(1.2\) nm) and binning parameters.
-
-2. **Compute RDFs \(g_{ij}(r)\)** *(if not precomputed)*  
-   - Use headgroup/COM selections appropriate to each species (DPPC, DIPC/DUPC, CHOL).  
-   - Export CSV per pair: columns `r, g_ij`.
-
-3. **Convert RDF → PMF**  
-   - \(W_{ij}(r)=-k_BT\ln g_{ij}(r)\).  
-   - Shift so \(W_{ij}(r_{\max})\approx 0\).  
-   - Save PMF curves (CSV).
-
-4. **Extract \(\omega_{ij}\)**  
-   - Locate the **first** PMF minimum within the contact window.  
-   - Use block averaging/bootstrapping to estimate uncertainty (mean ± SE/CI).  
-   - Set \(\omega_{ii}=0\).
-
-5. **Build \(\chi\) matrices**  
-   - Compute \(\chi'_{ij}=\omega_{ij}/k_BT\).  
-   - Optionally apply \(z_{ij}\) to get \(\chi_{ij}\) for lattice MC.  
-   - Assemble symmetric matrices (zero diagonal) with consistent label order.  
-   - Save as CSV/YAML and make heatmaps.
-
-6. **Sanity checks**  
-   - Inspect PMF shapes and marked minima.  
-   - Verify units and temperature.  
-   - Compare AA vs CG trends; run sensitivity scans (vary \(\omega_{ij}\) within CI).
 
 ---
 
