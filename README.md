@@ -100,8 +100,8 @@ These files should be included in the `topol.top` file to build the full system 
 
 This folder documents the **concept and steps** for extracting Flory–Huggins interaction parameters \(\chi_{ij}\) from molecular dynamics data.
 
-**Note:** **Home-made Python scripts** (based on **MDAnalysis** and **mdtraj**) were used a posteriori to analyze trajectories and generate plots.  
-**Data availability:** To maximize transparency and reproducibility (and to support the manuscript), we **share the precomputed RDF files** (`.dat`) for all lipid–lipid pairs analyzed (see **Provided RDF data** below).
+%%**Note:** **Home-made Python scripts** (based on **MDAnalysis** and **mdtraj**) were used a posteriori to analyze trajectories and generate plots.  
+**Data availability:** we **share the precomputed RDF files** (`.dat`) for all lipid–lipid pairs analyzed (see **Provided RDF data** below).
 
 ---
 
