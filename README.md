@@ -180,5 +180,40 @@ Optional lattice scaling (for MC on a triangular lattice, e.g. \(z=6\)):
 
 ---
 
+# Order Parameter — `S_mix` (Leaflet Mixing Entropy)
+
+Quantifies **leaflet demixing** between two lipid species (e.g., **DPPC** vs **DIPC**) using a **Voronoi neighbor graph**.  
+Cholesterol (CHOL) shapes local geometry but is **not** counted in the like/unlike fractions.
+
+---
+
+## Definition
+
+\[
+S_{\text{mix}} = -\big[\,X_{\mathrm{SL}}\log_2 X_{\mathrm{SL}} + X_{\mathrm{DL}}\log_2 X_{\mathrm{DL}}\,\big] \in [0,1]\ \text{bits}
+\]
+
+- \(X_{\mathrm{SL}}\): fraction of **similar** edges (A–A + B–B)  
+- \(X_{\mathrm{DL}}\): fraction of **dissimilar** edges (A–B)  
+- **Interpretation:**  
+  - \(S_{\text{mix}} \approx 1\) → random mixing  
+  - \(S_{\text{mix}} \to 0\) → strong demixing
+
+> Units are **bits** (base-2 logarithm). Run **upper** and **lower** leaflets separately.
+
+---
+
+## Run
+
+```bash
+python Smix_calc.py \
+  -s system.pdb \
+  -f md.xtc \
+  -leaflet upper \
+  -skip 10 \
+  -nt 8 \
+  -protein NO
+
+
 
 
