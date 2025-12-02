@@ -129,6 +129,18 @@ This folder documents the **concept and steps** for extracting Flory–Huggins i
 - **Location:** `CG_MD/all_beadpairs/`
 - **Format:** ASCII `.dat` files, one per pair/state point. Default columns:
 
+# Ternary Flory–Huggins Tutorial
+
+This tutorial (`tutorial_ternary_FH.zip`) provides a minimal, self-contained example
+showing how to go from MD-derived observables to ternary Flory–Huggins (FH)
+parameters and phase diagrams.
+
+## Unpack and inspect
+
+1. Unzip the archive:
+   ```bash
+   unzip tutorial_ternary_FH.zip
+   cd tutorial_ternary_FH
 
 ---
 
